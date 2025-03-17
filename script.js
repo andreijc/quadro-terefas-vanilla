@@ -1,5 +1,4 @@
 const colunas = document.querySelectorAll('.cards-coluna');
-const cards = document.querySelectorAll('.card');
 
 let cardpego = null;
 
@@ -14,20 +13,48 @@ const dragOver = (event)=> {
 
 }
 
-const dragEnter = ({target}) => {
-    if (target.classList.contains("card-coluna")){
-        target.classList.add("foco-coluna")
-        console.log("foi")
+const dragEnter = ({ target }) => {
+    if (target.classList.contains("cards-coluna")) {
+        target.classList.add("foco-coluna");
     }
+};
 
+const dragLeave = ({ target }) => {
+    target.classList.remove("foco-coluna")
 }
 
-cards.forEach((card)=> {
-    card.addEventListener("dragstart", dragStart)
-    })
+const drop = ({target}) => {
+    
+    if (target.classList.contains("cards-coluna")) {
+        target.classList.remove("foco-coluna")
+         target.append(cardpego)
+    }
+}
+
+const criarCard = ({ target }) => {
+    if (target.classList.contains("cards-coluna")){
+        const card = document.createElement("section")
+        card.className = "card"
+        card.draggable = "true"
+
+        card.addEventListener("dragstart", dragStart)
+        card.addEventListener("focusout",()=> {
+            card.contentEditable = "false"
+            if (!card.textContent) card.remove()
+        })
+        card.contentEditable = "true"
+        target.append(card)
+        card.focus()
+
+    }
+    
+}
 
 colunas.forEach((coluna) => {
     coluna.addEventListener("dragover", dragOver)
-    coluna.addEventListener("dragenter", dragEnter)
+    coluna.addEventListener("dragenter", dragEnter);
+    coluna.addEventListener("dragleave", dragLeave)
+    coluna.addEventListener("drop", drop)
+    coluna.addEventListener("dblclick", criarCard)
 
 })

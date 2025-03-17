@@ -1,28 +1,33 @@
-const colunas = document.querySelectorAll(".cards-colunas");
-const cartão = document.querySelectorAll(".card")
+const colunas = document.querySelectorAll('.cards-coluna');
+const cards = document.querySelectorAll('.card');
 
-let draggedcard;
+let cardpego = null;
 
-const dragstart = (event) => {
-    draggedcard = event.target;
-    event.dataTransfer.effectAllowed = 'move';
-    
-}
+const dragStart = (event)=>{
+    cardpego = event.target;
+    event.dataTransfer.effectAllowed = "move";
 
-const dragover = (event) => {
+};
+
+const dragOver = (event)=> {
     event.preventDefault()
+
 }
 
-const dragEnter = ({ target }) => {
-    console.log(target)
+const dragEnter = ({target}) => {
+    if (target.classList.contains("card-coluna")){
+        target.classList.add("foco-coluna")
+        console.log("foi")
+    }
+
 }
 
-cartão.forEach((cartão) => {
-    cartão.addEventListener("dragstart", dragstart);
-});
+cards.forEach((card)=> {
+    card.addEventListener("dragstart", dragStart)
+    })
 
-colunas.forEach((colunas) => {
-    colunas.addEventListener("dragover", dragover)
-    colunas.addEventListener("dragenter", dragover)
-}
-);
+colunas.forEach((coluna) => {
+    coluna.addEventListener("dragover", dragOver)
+    coluna.addEventListener("dragenter", dragEnter)
+
+})

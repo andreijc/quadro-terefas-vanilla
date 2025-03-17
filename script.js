@@ -5,7 +5,7 @@ let draggedcard;
 
 const dragstart = (event) => {
     draggedcard = event.target;
-    console.log(draggedcard)
+    event.dataTransfer.effectAllowed = 'move';
     
 }
 
@@ -13,9 +13,16 @@ const dragover = (event) => {
     event.preventDefault()
 }
 
+const dragEnter = ({ target }) => {
+    console.log(target)
+}
+
 cartão.forEach((cartão) => {
-    cartão.addEventListener("dragstart", dragstart());
+    cartão.addEventListener("dragstart", dragstart);
 });
 
-colunas.forEach((colunas => {
-    colunas.addEventListener("dragover", )}))
+colunas.forEach((colunas) => {
+    colunas.addEventListener("dragover", dragover)
+    colunas.addEventListener("dragenter", dragover)
+}
+);
